@@ -48,7 +48,7 @@ class ShopListFragment : Fragment() {
             productList.add(Product(Integer.toUnsignedLong(i), "test $i", Math.random().toInt()))
         }
 
-        setAllProducts()
+//        setAllProducts()
 
         initRecyclerView(v, context, productList)
         return v
