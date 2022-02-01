@@ -38,7 +38,7 @@ class LoginFragment : Fragment() {
         val btnLogin : Button = v.findViewById(R.id.loginButton)
         val registerTextView : TextView = v.findViewById(R.id.registerTextView)
         val shopLocalization : TextView = v.findViewById(R.id.shopLocalizationTextView)
-        val google_login_btn : Button = v.findViewById(R.id.google_login_btn)
+        val googleLoginBtn : Button = v.findViewById(R.id.google_login_btn)
 
         context.setTitle("Login")
 
@@ -61,7 +61,7 @@ class LoginFragment : Fragment() {
 
         mGoogleSignInClient = GoogleSignIn.getClient((activity as MainActivity), gso)
 
-        google_login_btn.setOnClickListener {
+        googleLoginBtn.setOnClickListener {
             signIn()
         }
 

@@ -81,11 +81,6 @@ class PurchaseFragment : Fragment() {
         cartListTextView.text = text
     }
 
-    private fun fetchPublishableKey() {
-        this.publishableKey = ""
-        PaymentConfiguration.init(context!!, publishableKey)
-    }
-
     companion object {
         @JvmStatic fun newInstance(cartList: ArrayList<CartRealm>) =
                 PurchaseFragment().apply {
