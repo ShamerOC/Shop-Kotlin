@@ -1,7 +1,6 @@
 package io.sh4.shop_kotlin.services
 
 import android.util.Log
-import io.sh4.shop_kotlin.models.Product
 import io.sh4.shop_kotlin.models.User
 import io.sh4.shop_kotlin.models.UserRealm
 import retrofit2.Call

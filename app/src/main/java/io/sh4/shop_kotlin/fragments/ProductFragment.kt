@@ -12,15 +12,8 @@ import io.sh4.shop_kotlin.models.ProductRealm
 import io.sh4.shop_kotlin.services.AuthService
 import io.sh4.shop_kotlin.services.CartService
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val PRODUCT = "product"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProductFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProductFragment : Fragment() {
     private var product: ProductRealm? = null
 

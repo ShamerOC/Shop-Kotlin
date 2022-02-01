@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.stripe.android.PaymentConfiguration
 import io.sh4.shop_kotlin.R
 import io.sh4.shop_kotlin.models.CartRealm
 import io.sh4.shop_kotlin.services.AddressService
+import okhttp3.OkHttpClient
 import java.io.Serializable
 import java.lang.StringBuilder
 
@@ -18,6 +20,8 @@ private const val CART_LIST = "CART_LIST"
 
 class PurchaseFragment : Fragment() {
     private var cartList : ArrayList<CartRealm>? = null
+    private val httpClient = OkHttpClient()
+    private lateinit var publishableKey : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +79,11 @@ class PurchaseFragment : Fragment() {
         text.append("Total: ")
             .append(sum.toString())
         cartListTextView.text = text
+    }
+
+    private fun fetchPublishableKey() {
+        this.publishableKey = ""
+        PaymentConfiguration.init(context!!, publishableKey)
     }
 
     companion object {

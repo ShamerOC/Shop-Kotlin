@@ -24,7 +24,6 @@ object ProductService {
                 products?.forEach { p -> add(p) }
             }
             override fun onFailure(call : Call<List<Product>>?, t: Throwable) {
-                Log.d("products after", call.toString())
                 Log.d("products after", t.toString())
             }
         })
@@ -35,7 +34,6 @@ object ProductService {
             val productRealm = ProductRealm(product)
             realmTransaction.insertOrUpdate(productRealm)
         }
-//        realm.close()
     }
 
     fun getAll() : List<ProductRealm> {

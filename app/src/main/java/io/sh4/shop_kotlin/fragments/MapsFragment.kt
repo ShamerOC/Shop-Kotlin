@@ -14,7 +14,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import io.sh4.shop_kotlin.R
-import io.sh4.shop_kotlin.services.ShopAddressService
+import io.sh4.shop_kotlin.models.ShopAddress
+import io.sh4.shop_kotlin.services.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MapsFragment : Fragment() {
 
@@ -29,16 +33,25 @@ class MapsFragment : Fragment() {
          * user has installed Google Play services and returned to the app.
          */
         val sydney = LatLng(50.049683, 19.944544)
-        val shopAddresses = ShopAddressService.getShopAddresses()
-        shopAddresses?.forEach { address ->
-            val lat : Double = address.lat
-            val lon : Double = address.lon
-            Log.d("shopAddresses", "lat: $lat lon: $lon")
-            googleMap.addMarker(MarkerOptions().position(LatLng(lat, lon)).title("Shop $lat $lon" ))
-        }
-//        googleMap.addMarker(MarkerOptions().position(LatLng(50.049683, 19.944544)).title("Shop"))
-//        googleMap.addMarker(MarkerOptions().position(LatLng(50.049623, 19.944514)).title("Shop"))
-//        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        val call : Call<List<ShopAddress>> = RetrofitClient.shopAddressApiService.getShopAddresses()
+        var shopAddresses : List<ShopAddress>? = null
+        Log.d("shopAddresses before", "true")
+        call.enqueue(object : Callback<List<ShopAddress>> {
+            override fun onResponse(call : Call<List<ShopAddress>>?, response: Response<List<ShopAddress>>?) {
+                shopAddresses = response!!.body()
+//                Log.d("shopAddresses after", shopAddresses.toString())
+                shopAddresses?.forEach { address ->
+                    val lat : Double = address.lat
+                    val lon : Double = address.lon
+                    Log.d("shopAddresses", "lat: $lat lon: $lon")
+                    googleMap.addMarker(MarkerOptions().position(LatLng(lat, lon)).title("Shop $lat $lon" ))
+                }
+            }
+            override fun onFailure(call : Call<List<ShopAddress>>?, t: Throwable) {
+                Log.d("products after", call.toString())
+                Log.d("products after", t.toString())
+            }
+        })
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 

@@ -21,11 +21,6 @@ class Shop : Application() {
 
         Realm.setDefaultConfiguration(configuration)
         Log.d("Shop.kt", "launching shop.kt")
-        configureRetrofit()
         ProductService.upsertDb()
-    }
-
-    private fun configureRetrofit() {
-
     }
 }
