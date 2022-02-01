@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.sh4.shop_kotlin.services.ProductService
 
 class Shop : Application() {
     override fun onCreate() {
@@ -21,6 +22,7 @@ class Shop : Application() {
         Realm.setDefaultConfiguration(configuration)
         Log.d("Shop.kt", "launching shop.kt")
         configureRetrofit()
+        ProductService.upsertDb()
     }
 
     private fun configureRetrofit() {

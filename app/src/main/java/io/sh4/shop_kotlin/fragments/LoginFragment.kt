@@ -10,7 +10,13 @@ import android.widget.Button
 import android.widget.TextView
 import io.sh4.shop_kotlin.MainActivity
 import io.sh4.shop_kotlin.R
+import io.sh4.shop_kotlin.models.User
 import io.sh4.shop_kotlin.services.AuthService
+import io.sh4.shop_kotlin.services.RetrofitClient
+import io.sh4.shop_kotlin.services.UserService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,6 +52,7 @@ class LoginFragment : Fragment() {
 
         val btnLogin : Button = v.findViewById(R.id.loginButton)
         val registerTextView : TextView = v.findViewById(R.id.registerTextView)
+        val shopLocalization : TextView = v.findViewById(R.id.shopLocalizationTextView)
 
         context.setTitle("Login")
 
@@ -54,21 +61,37 @@ class LoginFragment : Fragment() {
         }
 
         registerTextView.setOnClickListener {
-            context.replaceFragment(RegisterFragment(), false)
+            context.replaceFragment(RegisterFragment(), true)
         }
+
+        shopLocalization.setOnClickListener {
+            context.replaceFragment(MapsFragment(), true)
+        }
+
 
         return v
     }
 
     fun login(view : View) {
-        var email = getView()?.findViewById<TextView>(R.id.editTextEmail).toString()
-        var password = getView()?.findViewById<TextView>(R.id.editTextPassword).toString()
-        if (AuthService.login(email, password)) {
-            (activity as MainActivity).changeActivityToShop(view)
-        } else {
-
+        var email = getView()?.findViewById<TextView>(R.id.editTextEmail)?.text.toString()
+        var password = getView()?.findViewById<TextView>(R.id.editTextPassword)?.text.toString()
+        val call : Call<User> = RetrofitClient.authApiService.login(User(name = email, password = password, id = null))
+        var userResponse : User? = null
+        call.enqueue(object : Callback<User> {
+            override fun onResponse(call : Call<User>?, response: Response<User>?) {
+                userResponse = response!!.body()
+                Log.d("User after", userResponse.toString())
+                if (userResponse != null) {
+                    val userRealm = UserService.getOrAddToRealm(userResponse!!)
+                    AuthService.user = userRealm
+                    (activity as MainActivity).changeActivityToShop(view)
+                }
+            }
+            override fun onFailure(call : Call<User>?, t: Throwable) {
+                Log.d("User fail", call.toString())
+            }
+        })
         }
-    }
 
     companion object {
         /**

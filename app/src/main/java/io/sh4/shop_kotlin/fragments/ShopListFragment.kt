@@ -2,16 +2,19 @@ package io.sh4.shop_kotlin.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.sh4.shop_kotlin.R
 import io.sh4.shop_kotlin.ShopActivity
 import io.sh4.shop_kotlin.adapters.RecyclerViewAdapter
-import io.sh4.shop_kotlin.models.Product
+import io.sh4.shop_kotlin.models.ProductRealm
+import io.sh4.shop_kotlin.services.ProductService
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,37 +42,23 @@ class ShopListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val v : View = inflater.inflate(R.layout.fragment_shop_list, container, false)
         val context : Context = (activity as ShopActivity)
 
-        var productList : MutableList<Product> = ArrayList()
-        for (i in 0..110) {
-            productList.add(Product(Integer.toUnsignedLong(i), "test $i", Math.random().toInt()))
-        }
+        val productList : List<ProductRealm> = ProductService.getAll()
 
-//        setAllProducts()
+        val cartButton : Button = v.findViewById(R.id.cartButton)
+
+        cartButton.setOnClickListener {
+            (it!!.context as ShopActivity).replaceFragment(CartFragment(), true)
+            Log.d("ShopList", "Switching cart fragment")
+        }
 
         initRecyclerView(v, context, productList)
         return v
     }
 
-//    private fun setAllProducts() : List<Product>? {
-//        val call : Call<List<Product>> = productApiService.getProducts()
-//        var products : List<Product>? = null
-//        Log.d("products before", "true")
-//        call.enqueue(object : Callback<List<Product>> {
-//            override fun onResponse(call : Call<List<Product>>, response: Response<List<Product>>) {
-//                Log.d("products after", products.toString())
-//                products = response.body()
-//            }
-//            override fun onFailure(call : Call<List<Product>>, t: Throwable) {
-//            }
-//        })
-//        return products
-//    }
-
-    private fun initRecyclerView(v : View, context : Context, productList : List<Product>) {
+    private fun initRecyclerView(v: View, context: Context, productList: List<ProductRealm>) {
         val recyclerView : RecyclerView = v.findViewById(R.id.recycleViewShop)
         val recyclerViewAdapter : RecyclerViewAdapter = RecyclerViewAdapter(context, productList)
         recyclerView.adapter = recyclerViewAdapter

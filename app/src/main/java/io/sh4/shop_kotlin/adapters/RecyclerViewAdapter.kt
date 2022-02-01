@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import io.sh4.shop_kotlin.R
 import io.sh4.shop_kotlin.ShopActivity
 import io.sh4.shop_kotlin.fragments.ProductFragment
-import io.sh4.shop_kotlin.models.Product
+import io.sh4.shop_kotlin.models.ProductRealm
 
-class RecyclerViewAdapter(private val context: Context, private val productList: List<Product> = ArrayList()) :
+class RecyclerViewAdapter(private val context: Context, public val productList: List<ProductRealm> = ArrayList()) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
