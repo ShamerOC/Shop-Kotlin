@@ -133,7 +133,6 @@ class LoginFragment : Fragment() {
         call.enqueue(object : Callback<User> {
             override fun onResponse(call : Call<User>?, response: Response<User>?) {
                 userResponse = response!!.body()
-                Log.d("User after", userResponse.toString())
                 if (userResponse != null) {
                     val userRealm = UserService.getOrAddToRealm(userResponse!!)
                     AuthService.user = userRealm
@@ -144,7 +143,6 @@ class LoginFragment : Fragment() {
             }
             override fun onFailure(call : Call<User>?, t: Throwable) {
                 registerUser(view, userOriginal)
-                Log.d("User fail", "in login")
             }
         })
     }
@@ -152,14 +150,11 @@ class LoginFragment : Fragment() {
     private fun registerUser(view : View, userOriginal : User) {
         val callRegister : Call<User> = RetrofitClient.userApiService.createUser(userOriginal)
         var userResponse : User? = null
-        Log.d("User before", "true")
         callRegister.enqueue(object : Callback<User> {
             override fun onResponse(call : Call<User>?, response: Response<User>?) {
                 userResponse = response!!.body()
-                Log.d("User after", userResponse.toString())
                 val userRealm = UserService.getOrAddToRealm(userResponse!!)
                 AuthService.user = userRealm
-                Log.d("User after", userResponse.toString())
                 (activity as MainActivity).changeActivityToShop(view)
             }
             override fun onFailure(call : Call<User>?, t: Throwable) {
