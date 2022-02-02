@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "19217725685",
+    "project_id": "android-shop-dd3ec",
+    "storage_bucket": "android-shop-dd3ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19217725685:android:9cc7dd37c31e9da46a2dbc",
+        "android_client_info": {
+          "package_name": "io.sh4.shop_kotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19217725685-ck8ttdq27not4clcu7aeo2il2sii6d7h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXd4Uc47H9898C5fMp2gbS1J18cXW1VQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19217725685-ck8ttdq27not4clcu7aeo2il2sii6d7h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
